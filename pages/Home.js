@@ -1,5 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import Aula from '../img/Aula.png'
+import Config from '../img/Config.png'
+import Expec from '../img/Expec.png'
+import Foto from '../img/Foto.png'
+import Map from '../img/Map.png'
+import Obs from '../img/Obs.png'
 
 const Home = ({ navigation }) => {
   const handleProfilePicture = () => {
@@ -17,7 +23,7 @@ const Home = ({ navigation }) => {
       </View>
 
       <TouchableOpacity style={styles.profilePicture} onPress={handleProfilePicture}>
-        <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.profileIcon} />
+        <Image source={Foto} style={styles.profileIcon} />
       </TouchableOpacity>
       <Text style={styles.profileName}>Pedro Henrique Aguilera Silva</Text>
       <Text style={styles.profileId}>449432</Text>
@@ -43,27 +49,27 @@ const Home = ({ navigation }) => {
       <View style={styles.dataBox}>
         <Text style={styles.boxTitle}>Aluno</Text>
         <View style={styles.iconRow}>
-          <TouchableOpacity style={[styles.iconBox, { backgroundColor: '#FF3B30' }]} onPress={() => handleNavigate('ObservacaoDosProfessores')}>
-            <Image style={styles.iconImage} />
+          <TouchableOpacity style={[styles.iconBox]} onPress={() => handleNavigate('ObservacaoDosProfessores')}>
+            <Image style={styles.iconImage} source={Obs}/>
             <Text style={styles.iconText}>Observações dos Professores</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconBox, { backgroundColor: '#00C2FF' }]} onPress={() => handleNavigate('MapeamentoDaSala')}>
-            <Image style={styles.iconImage} />
+          <TouchableOpacity style={[styles.iconBox]} onPress={() => handleNavigate('MapeamentoDaSala')}>
+            <Image style={styles.iconImage} source={Map} />
             <Text style={styles.iconText}>Mapeamento da Sala</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconBox, { backgroundColor: '#8E8E93' }]} onPress={() => handleNavigate('Configuracoes')}>
-            <Image style={styles.iconImage} />
+          <TouchableOpacity style={[styles.iconBox]} onPress={() => handleNavigate('Configuracoes')}>
+            <Image style={styles.iconImage} source={Config}/>
             <Text style={styles.iconText}>Configurações</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.iconRowNoSpace}>
-          <TouchableOpacity style={[styles.iconBox, { backgroundColor: '#007AFF' }]} onPress={() => handleNavigate('ExpectativasDeAprendizagem')}>
-            <Image style={styles.iconImage} />
+          <TouchableOpacity style={[styles.iconBox]} onPress={() => handleNavigate('ExpectativasDeAprendizagem')}>
+            <Image style={styles.iconImage} source={Expec}/>
             <Text style={styles.iconText}>Expectativas de Aprendizagem</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconBox, { backgroundColor: '#FF9500' }]} onPress={() => handleNavigate('AulasAnteriores')}>
-            <Image style={styles.iconImage} />
+          <TouchableOpacity style={[styles.iconBox]} onPress={() => handleNavigate('AulasAnteriores')}>
+            <Image style={styles.iconImage} source={Aula}/>
             <Text style={styles.iconText}>Aulas Anteriores</Text>
           </TouchableOpacity>
         </View>
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
       },
       header: {
         width: '100%',
-        paddingVertical: 50, // Triplicado o espaçamento vertical
+        paddingVertical: 70, // Triplicado o espaçamento vertical
         paddingHorizontal: 20, // Espaçamento lateral
         alignItems: 'flex-start',
         backgroundColor: '#00C2FF',
@@ -89,10 +95,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: 'bold',
-        width: 160
+        width: 160,
+        paddingTop: -50
       },
       profilePicture: {
-        marginTop: -50,
+        marginTop: -60,
         width: 150,
         height: 150,
         borderRadius: 100,
@@ -170,14 +177,15 @@ const styles = StyleSheet.create({
         marginRight: 15, // Pequeno espaçamento entre os ícones na mesma linha
       },
       iconImage: {
-        width: 40,
-        height: 40,
+        width: 60,
+        height: 60,
         marginBottom: 5,
       },
       iconText: {
-        fontSize: 10,
+        fontSize: 12,
+        fontWeight: 'bold',
         textAlign: 'center',
-        color: 'white',
+        color: 'gray',
       },
 });
 
