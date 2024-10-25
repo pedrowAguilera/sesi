@@ -33,7 +33,7 @@ const Routes = () => {
       <Stack.Screen
         name="ExpectativasDeAprendizagem"
         component={ExpectativasDeAprendizagem}
-        options={{ headerBackTitleVisible: false, headerTitle: '', headerTransparent: true }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="AulasAnteriores"

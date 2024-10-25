@@ -15,14 +15,20 @@ const MapeamentoDaSala = () => {
     navigation.goBack(); // Volta para a página inicial
   };
 
-  // Função para renderizar cadeiras
+  // Função para renderizar cadeiras com o número "N°29" em cima
   const renderCadeiras = () => {
     const rows = [];
     for (let i = 0; i < 6; i++) {
       rows.push(
         <View key={i} style={styles.row}>
-          <Image source={cadeira} style={styles.chairImage} />
-          <Image source={cadeira} style={styles.chairImage} />
+          <View style={styles.cadeiraContainer}>
+            <Text style={styles.cadeiraTexto}>N°29</Text>
+            <Image source={cadeira} style={styles.chairImage} />
+          </View>
+          <View style={styles.cadeiraContainer}>
+            <Text style={styles.cadeiraTexto}>N°29</Text>
+            <Image source={cadeira} style={styles.chairImage} />
+          </View>
         </View>
       );
     }
@@ -33,32 +39,32 @@ const MapeamentoDaSala = () => {
     <View style={styles.container}>
       {/* Parte superior com professor e porta */}
       <View style={styles.topRow}>
-        <Image source={porta} style={styles.iconImage2} />
         <Image source={prof} style={styles.profImage} />
+        <Image source={porta} style={styles.iconImage2} />
       </View>
 
       {/* Cadeiras em colunas */}
       <View style={styles.chairsOrganization}>
-      <View style={styles.chairsContainer}>
-        {renderCadeiras()}
-      </View>
+        <View style={styles.chairsContainer}>
+          {renderCadeiras()}
+        </View>
 
-      <View style={styles.chairsContainer}>
-        {renderCadeiras()}
-      </View>
+        <View style={styles.chairsContainer}>
+          {renderCadeiras()}
+        </View>
 
-      <View style={styles.chairsContainer}>
-        {renderCadeiras()}
-      </View>
+        <View style={styles.chairsContainer}>
+          {renderCadeiras()}
+        </View>
       </View>
 
       {/* Botão de Voltar (com ícone, nome e X) */}
       <View style={styles.voltarBox}>
         <View style={styles.voltarButton}>
-        <View >
-          <Image style={styles.iconImage} source={Map}/>
+          <View>
+            <Image style={styles.iconImage} source={Map} />
           </View>
-          <View >
+          <View>
             <Text style={styles.voltarText}>Mapeamento da sala</Text>
           </View>
           <TouchableOpacity onPress={voltarParaPaginaInicial}>
@@ -82,25 +88,27 @@ const styles = StyleSheet.create({
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 50, // Ajuste para espaçamento entre a parte superior e as cadeiras
   },
   profImage: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
+    alignItems: 'center',
   },
   iconImage: {
     width: 45,
     height: 45,
   },
   iconImage2: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 45,
   },
   chairsContainer: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 5
+    margin: 5,
   },
   chairsOrganization: {
     flexDirection: 'row',
@@ -115,6 +123,15 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginHorizontal: 10, // Espaçamento entre as cadeiras
+  },
+  cadeiraContainer: {
+    alignItems: 'center', // Alinhar o texto ao centro em relação à cadeira
+  },
+  cadeiraTexto: {
+    fontSize: 12,
+    marginBottom: -5, // Espaçamento entre o texto e a imagem da cadeira
+    fontWeight: 'bold',
+    color: '#000',
   },
   voltarBox: {
     position: 'absolute',
