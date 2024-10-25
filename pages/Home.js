@@ -114,9 +114,7 @@ const Home = ({ navigation }) => {
         </View>
         <View style={styles.row}>
           <Text style={styles.dataInfo}>*****</Text>
-          <TouchableOpacity onPress={() => Alert.alert('Alterar Senha')}>
-            <Text style={styles.changeButton}>Alterar</Text>
-          </TouchableOpacity>
+          
         </View>
       </View>
 

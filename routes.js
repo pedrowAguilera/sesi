@@ -28,7 +28,7 @@ const Routes = () => {
       <Stack.Screen
         name="Configuracoes"
         component={Configuracoes}
-        options={{ headerBackTitleVisible: false, headerTitle: '', headerTransparent: true }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ExpectativasDeAprendizagem"

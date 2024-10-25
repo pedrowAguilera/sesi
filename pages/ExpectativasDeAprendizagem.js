@@ -7,7 +7,7 @@ import Expec from '../img/Expec.png';
 
 const ExpectativasDeAprendizagem = () => {
   const [materiaSelecionada, setMateriaSelecionada] = useState('História');
-  const [expectativasVisiveis, setExpectativasVisiveis] = useState({});
+  const [expectativaAtiva, setExpectativaAtiva] = useState(null); // Mudança aqui
   const navigation = useNavigation();
 
   // Dados de exemplo para as matérias e expectativas
@@ -17,9 +17,6 @@ const ExpectativasDeAprendizagem = () => {
       { titulo: '2.1 Título', texto: 'Texto da expectativa de História 2.1' },
       { titulo: '3.1 Título', texto: 'Texto da expectativa de História 3.1' },
       { titulo: '4.1 Título', texto: 'Texto da expectativa de História 4.1' },
-      { titulo: '5.1 Título', texto: 'Texto da expectativa de História 5.1' },
-      { titulo: '4.1 Título', texto: 'Texto da expectativa de História 4.1' },
-      { titulo: '5.1 Título', texto: 'Texto da expectativa de História 5.1' },{ titulo: '4.1 Título', texto: 'Texto da expectativa de História 4.1' },
       { titulo: '5.1 Título', texto: 'Texto da expectativa de História 5.1' },
     ],
     Matemática: [
@@ -32,12 +29,9 @@ const ExpectativasDeAprendizagem = () => {
     // Adicione mais matérias aqui
   };
 
-  // Função para alternar visibilidade do texto da expectativa
+  // Função para alternar a expectativa ativa e fechar a anterior
   const toggleExpectativa = (index) => {
-    setExpectativasVisiveis((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+    setExpectativaAtiva(expectativaAtiva === index ? null : index);
   };
 
   return (
@@ -59,29 +53,29 @@ const ExpectativasDeAprendizagem = () => {
       {/* Lista de Expectativas */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.expectativaInicio}>
-        {expectativasPorMateria[materiaSelecionada].map((expectativa, index) => (
-          <View key={index} style={styles.expectativaContainer}>
-            {/* Título da Expectativa */}
-            <TouchableOpacity
-              style={styles.tituloContainer}
-              onPress={() => toggleExpectativa(index)}
-            >
-              <Text style={styles.tituloText}>{expectativa.titulo}</Text>
-              <Text style={styles.icon}>{expectativasVisiveis[index] ? '▲' : '▼'}</Text>
-            </TouchableOpacity>
+          {expectativasPorMateria[materiaSelecionada].map((expectativa, index) => (
+            <View key={index} style={styles.expectativaContainer}>
+              {/* Título da Expectativa */}
+              <TouchableOpacity
+                style={styles.tituloContainer}
+                onPress={() => toggleExpectativa(index)}
+              >
+                <Text style={styles.tituloText}>{expectativa.titulo}</Text>
+                <Text style={styles.icon}>{expectativaAtiva === index ? '▲' : '▼'}</Text>
+              </TouchableOpacity>
 
-            {/* Texto da Expectativa (expandido ou recolhido) */}
-            {expectativasVisiveis[index] && (
-              <View style={styles.textoContainer}>
-                <Text style={styles.texto}>{expectativa.texto}</Text>
-              </View>
-            )}
-          </View>
-        ))}
+              {/* Texto da Expectativa (expandido ou recolhido) */}
+              {expectativaAtiva === index && (
+                <View style={styles.textoContainer}>
+                  <Text style={styles.texto}>{expectativa.texto}</Text>
+                </View>
+              )}
+            </View>
+          ))}
         </View>
       </ScrollView>
 
-      {/* Botão de Voltar (Mapeamento da Sala) */}
+      {/* Botão de Voltar */}
       <View style={styles.voltarBox}>
         <View style={styles.voltarButton}>
           <Image style={styles.iconImage} source={Expec} />
@@ -101,31 +95,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
-    paddingTop: 60, // Adicionado para evitar sobreposição no topo
+    paddingTop: 60, // Espaço para evitar sobreposição no topo
   },
   scrollContainer: {
-    paddingBottom: 100, // Espaço extra para evitar que conteúdo fique escondido atrás da barra de navegação
+    marginTop: -40,
+    paddingBottom: 100,
+    marginLeft: 10,
+    marginRight: 10,
   },
   materiaContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    position: 'absolute',
-    top: 50, // Distância agradável do topo
-    left: 20, // Mover para a esquerda
-    right: 20,
-    zIndex: 10, // Para garantir que fique na frente
+    justifyContent: 'center', // Centraliza horizontalmente
+    marginBottom: 10,
+    backgroundColor: '#E63946',
+    width: '50%', // Ajusta para centralização
+    alignSelf: 'center', // Garante que fique no centro
+    borderRadius: 20,
+    paddingLeft: 10,
+    marginRight: 10
   },
   materiaText: {
     fontSize: 16,
     marginRight: 10,
+    color: 'white',
   },
   picker: {
     flex: 1,
     height: 50,
+    color: 'white',
   },
   expectativaInicio: {
-    marginTop: 50, // Ajuste de distância do seletor de matéria
+    marginTop: 50, // Ajuste para distanciar do seletor de matéria
   },
   expectativaContainer: {
     marginBottom: 10,
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   icon: {
-    color: '#FFF',
+    color: 'white',
   },
   textoContainer: {
     backgroundColor: '#F1A7A1',
