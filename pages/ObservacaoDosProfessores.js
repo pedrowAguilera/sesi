@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
-    paddingRight: 120
+    paddingRight: 100
   },
   fecharIcon: {
     backgroundColor: '#00FFAB',

@@ -24,8 +24,7 @@ const Routes = () => {
       <Stack.Screen
         name="MapeamentoDaSala"
         component={MapeamentoDaSala}
-        options={{ headerBackTitleVisible: false, headerTitle: '', headerTransparent: true }}
-      />
+        options={{ headerShown: false }} />
       <Stack.Screen
         name="Configuracoes"
         component={Configuracoes}

@@ -1,15 +1,84 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-import Aula from '../img/Aula.png'
-import Config from '../img/Config.png'
-import Expec from '../img/Expec.png'
-import Foto from '../img/Foto.png'
-import Map from '../img/Map.png'
-import Obs from '../img/Obs.png'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, LogBox } from 'react-native';
+import * as ImagePicker from 'expo-image-picker'; // Certifique-se de importar o ImagePicker
+import Aula from '../img/Aula.png';
+import Config from '../img/Config.png';
+import Expec from '../img/Expec.png';
+import Foto from '../img/Foto.png';
+import Map from '../img/Map.png';
+import Obs from '../img/Obs.png';
+
+// Ignorar possíveis avisos irrelevantes de logs
+LogBox.ignoreLogs(['Warning: ...']); 
 
 const Home = ({ navigation }) => {
-  const handleProfilePicture = () => {
-    Alert.alert("Opção de alterar foto de perfil");
+  const [profileImage, setProfileImage] = useState(null); // Adicionando estado para a imagem de perfil
+
+  const handleProfilePicture = async () => {
+    // Mostrar opções de tirar foto ou escolher da galeria
+    const options = [
+      { text: 'Tirar Foto', onPress: handleTakePhoto },
+      { text: 'Escolher da Galeria', onPress: handlePickImage },
+      { text: 'Cancelar', style: 'cancel' }
+    ];
+    Alert.alert("Alterar Foto de Perfil", "Escolha uma opção:", options);
+  };
+
+  const handleImageSelection = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      const selectedImageUri = result.assets[0].uri; // Acessando a URI corretamente
+      setImage(selectedImageUri);
+      console.log("URI da imagem selecionada:", selectedImageUri);
+    } else {
+      console.log("Seleção de imagem cancelada.");
+    }
+  };  
+
+  const handleTakePhoto = async () => {
+    // Solicitar permissão para usar a câmera
+    const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
+    if (cameraPermission.granted) {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+      console.log("Resultado da câmera:", result); // Verificar o resultado da câmera
+      if (!result.cancelled) {
+        console.log("URI da imagem tirada:", result.uri);
+        setProfileImage(result.uri); // Definir a imagem tirada como imagem de perfil
+      }
+    } else {
+      Alert.alert("Permissão negada", "Precisamos de acesso à câmera para tirar uma foto.");
+    }
+  };
+
+  const handlePickImage = async () => {
+    // Solicitar permissão para acessar a galeria
+    const galleryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (galleryPermission.granted) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+      console.log("Resultado da galeria:", result); // Verificar o resultado da galeria
+      if (!result.cancelled) {
+        console.log("URI da imagem selecionada:", result.uri);
+        setProfileImage(result.uri); // Definir a imagem escolhida como imagem de perfil
+      }
+    } else {
+      Alert.alert("Permissão negada", "Precisamos de acesso à galeria para escolher uma foto.");
+    }
   };
 
   const handleNavigate = (option) => {
@@ -23,7 +92,12 @@ const Home = ({ navigation }) => {
       </View>
 
       <TouchableOpacity style={styles.profilePicture} onPress={handleProfilePicture}>
-        <Image source={Foto} style={styles.profileIcon} />
+        {/* Exibir a imagem de perfil escolhida/tirada, ou a imagem padrão se nenhuma foi definida */}
+        {profileImage ? (
+          <Image source={{ uri: profileImage }} style={styles.profileIcon} />
+        ) : (
+          <Image source={Foto} style={styles.profileIcon} />
+        )}
       </TouchableOpacity>
       <Text style={styles.profileName}>Pedro Henrique Aguilera Silva</Text>
       <Text style={styles.profileId}>449432</Text>
@@ -86,8 +160,8 @@ const styles = StyleSheet.create({
       },
       header: {
         width: '100%',
-        paddingVertical: 70, // Triplicado o espaçamento vertical
-        paddingHorizontal: 20, // Espaçamento lateral
+        paddingVertical: 70,
+        paddingHorizontal: 20,
         alignItems: 'flex-start',
         backgroundColor: '#00C2FF',
       },
@@ -108,8 +182,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       profileIcon: {
-        width: 50,
-        height: 50,
+        width: 150, // Deixa a imagem do tamanho da caixa
+        height: 150,
+        borderRadius: 100, // Arredondar a imagem também
       },
       profileName: {
         fontSize: 18,
@@ -124,8 +199,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         marginTop: 5,
-        alignSelf: 'flex-end', // Coloca a % de Freq. no lado direito
-        marginRight: 20, // Ajuste para espaçamento
+        alignSelf: 'flex-end',
+        marginRight: 20,
       },
       dataBox: {
         width: '90%',
@@ -167,26 +242,24 @@ const styles = StyleSheet.create({
       iconRowNoSpace: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginBottom: 10, // Adiciona espaçamento entre as duas caixas na segunda linha
+        marginBottom: 10,
       },
       iconBox: {
-        width: '30%',
+        width: '31%',
         padding: 10,
         borderRadius: 10,
         alignItems: 'center',
-        marginRight: 15, // Pequeno espaçamento entre os ícones na mesma linha
+        marginRight: 13,
       },
       iconImage: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         marginBottom: 5,
       },
       iconText: {
         fontSize: 12,
-        fontWeight: 'bold',
         textAlign: 'center',
-        color: 'gray',
       },
-});
+    });
 
 export default Home;
