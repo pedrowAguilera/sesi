@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center', // Centraliza horizontalmente
     marginBottom: 10,
-    backgroundColor: '#E63946',
+    backgroundColor: '#E5383B',
     width: '50%', // Ajusta para centralização
     alignSelf: 'center', // Garante que fique no centro
     borderRadius: 20,
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   tituloContainer: {
-    backgroundColor: '#E63946',
+    backgroundColor: '#E5383B',
     padding: 15,
     borderRadius: 10,
     flexDirection: 'row',
