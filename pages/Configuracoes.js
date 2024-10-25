@@ -1,36 +1,73 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Image } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Config from '../img/Config.png'
 
-const ObservacaoDosProfessores = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisible2, setModalVisible2] = useState(false);
+import Config from '../img/Config.png'; // Sua imagem existente
+import Not from '../img/Not.png'; // Ícone das notificações
+import Polit from '../img/Polit.png'; // Ícone para Termo e Políticas
+import Ajuda from '../img/Ajuda.png'; // Ícone para Central de Ajuda
+import Logout from '../img/Logout.png'; // Ícone para Sair
+
+const Configuracoes = () => {
   const navigation = useNavigation();
 
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
+  const handleNotificacoes = () => {
+    // Navegar para a página de Gerenciar Notificações
+    navigation.navigate('GerenciarNotificacoes');
   };
 
-  const toggleModal2 = () => {
-    setModalVisible2(!modalVisible2);
+  const handleTermoPoliticas = () => {
+    // Abrir link externo para Termo e Políticas
+    Linking.openURL('https://www.youtube.com/watch?v=8zeyRAFMizc');
   };
 
-  const voltarParaPaginaInicial = () => {
-    navigation.goBack(); // Volta para a página inicial
+  const handleCentralAjuda = () => {
+    // Abrir link externo para Central de Ajuda
+    Linking.openURL('https://www.youtube.com/watch?v=8zeyRAFMizc');
+  };
+
+  const handleSairConta = () => {
+    // Navegar para a página de Login
+    navigation.navigate('Login');
   };
 
   return (
     <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Opções de Configurações */}
+        <TouchableOpacity style={styles.option} onPress={handleNotificacoes}>
+          <Image source={Not} style={styles.icon} />
+          <Text style={styles.optionText}>Gerenciar notificações</Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
+        
+        <TouchableOpacity style={styles.option} onPress={handleTermoPoliticas}>
+          <Image source={Polit} style={styles.icon} />
+          <Text style={styles.optionText}>Termo e políticas</Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
+        
+        <TouchableOpacity style={styles.option} onPress={handleCentralAjuda}>
+          <Image source={Ajuda} style={styles.icon} />
+          <Text style={styles.optionText}>Central de ajuda</Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
 
-      {/* Botão de Voltar (com ícone, nome e X) */}
+        <TouchableOpacity style={styles.option} onPress={handleSairConta}>
+          <Image source={Logout} style={styles.icon} />
+          <Text style={[styles.optionText, styles.sairText]}>Sair desta conta</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+      {/* Versão do Aplicativo */}
+      <Text style={styles.versaoText}>Versão do aplicativo 1.0.0</Text>
+
+      {/* Botão de Voltar com ícone e X */}
       <View style={styles.voltarBox}>
         <View style={styles.voltarButton}>
-          <View >
-          <Image style={styles.iconImage} source={Config}/>
-          </View>
+          <Image style={styles.iconImage} source={Config} />
           <Text style={styles.voltarText}>Configurações</Text>
-          <TouchableOpacity onPress={voltarParaPaginaInicial}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <View style={styles.fecharIcon}>
               <Text style={styles.fecharIconText}>X</Text>
             </View>
@@ -44,9 +81,39 @@ const ObservacaoDosProfessores = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#F5F5F5',
-    paddingTop: 70
+    paddingTop: 60,
+  },
+  scrollContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 100,
+  },
+  option: {
+    flexDirection: 'row', // Coloca o ícone e o texto lado a lado
+    alignItems: 'center', // Alinha o ícone com o texto
+    paddingVertical: 30,
+  },
+  optionText: {
+    fontSize: 18,
+    color: '#000',
+    marginLeft: 10, // Adiciona espaçamento entre o ícone e o texto
+  },
+  icon: {
+    width: 28, // Define o tamanho do ícone
+    height: 28,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+  },
+  sairText: {
+    color: '#E63946',
+  },
+  versaoText: {
+    textAlign: 'center',
+    color: 'black',
+    marginTop: 20,
+    opacity: 1,
   },
   voltarBox: {
     position: 'absolute',
@@ -68,26 +135,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  voltarIcon: {
-    backgroundColor: '#FF3B30',
-    borderRadius: 20,
-    padding: 10,
-  },
-  voltarIconText: {
-    fontSize: 16,
-    color: '#FFF',
-  },
   voltarText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
-    paddingRight: 100
+    paddingRight: 40,
   },
   fecharIcon: {
     backgroundColor: '#00FFAB',
     borderRadius: 50,
     padding: 10,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   fecharIconText: {
     fontSize: 16,
@@ -95,7 +153,8 @@ const styles = StyleSheet.create({
   },
   iconImage: {
     width: 45,
-    height: 45
-  }
+    height: 45,
+  },
 });
-export default ObservacaoDosProfessores;
+
+export default Configuracoes;

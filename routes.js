@@ -6,6 +6,7 @@ import MapeamentoDaSala from './pages/MapeamentoDaSala';
 import Configuracoes from './pages/Configuracoes';
 import ExpectativasDeAprendizagem from './pages/ExpectativasDeAprendizagem';
 import AulasAnteriores from './pages/AulasAnteriores';
+import GerenciarNotificacoes from './pages/GerenciarNotificacoes'
 
 const Stack = createStackNavigator();
 
@@ -39,7 +40,14 @@ const Routes = () => {
         name="AulasAnteriores"
         component={AulasAnteriores}
         options={{ headerShown: false }} />
+      <Stack.Screen
+        name="GerenciarNotificacoes"
+        component={GerenciarNotificacoes}
+        options={{ headerBackTitleVisible: false, headerTitle: 'Gerenciar Notificações', headerTransparent: true }}
+      />
     </Stack.Navigator>
+
+
   );
 };
 

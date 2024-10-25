@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, LogBox } from 'react-native';
-import * as ImagePicker from 'expo-image-picker'; // Certifique-se de importar o ImagePicker
+import * as ImagePicker from "expo-image-picker"; // Certifique-se de importar o ImagePicker
 import Aula from '../img/Aula.png';
 import Config from '../img/Config.png';
 import Expec from '../img/Expec.png';
