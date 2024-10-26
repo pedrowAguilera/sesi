@@ -108,7 +108,7 @@ const handleTakePhoto = async () => {
         {profileImage ? (
           <Image source={{ uri: profileImage }} style={styles.profileIcon} />
         ) : (
-          <Image source={Foto} style={styles.profileIcon} />
+          <Image source={Foto} style={styles.profileIcon2} />
         )}
       </TouchableOpacity>
       <Text style={styles.profileName}>Pedro Henrique Aguilera Silva</Text>
@@ -195,6 +195,10 @@ const styles = StyleSheet.create({
         width: 150, // Deixa a imagem do tamanho da caixa
         height: 150,
         borderRadius: 100, // Arredondar a imagem também
+      },
+      profileIcon2: {
+        width: 50, // Deixa a imagem do tamanho da caixa
+        height: 50,
       },
       profileName: {
         fontSize: 18,
