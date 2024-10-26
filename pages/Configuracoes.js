@@ -18,12 +18,12 @@ const Configuracoes = () => {
 
   const handleTermoPoliticas = () => {
     // Abrir link externo para Termo e Políticas
-    Linking.openURL('https://www.youtube.com/watch?v=8zeyRAFMizc');
+    Linking.openURL('https://layers.education/privacidade');
   };
 
   const handleCentralAjuda = () => {
     // Abrir link externo para Central de Ajuda
-    Linking.openURL('https://www.youtube.com/watch?v=8zeyRAFMizc');
+    Linking.openURL('https://suporte.layers.education/kb');
   };
 
   const handleSairConta = () => {
