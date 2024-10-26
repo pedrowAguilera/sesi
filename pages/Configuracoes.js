@@ -26,9 +26,8 @@ const Configuracoes = () => {
     Linking.openURL('https://suporte.layers.education/kb');
   };
 
-  const handleSairConta = () => {
-    // Navegar para a página de Login
-    navigation.navigate('Login');
+  const handleNavigate = (option) => {
+    navigation.navigate(option);
   };
 
   return (
@@ -53,7 +52,7 @@ const Configuracoes = () => {
         </TouchableOpacity>
         <View style={styles.divider} />
 
-        <TouchableOpacity style={styles.option} onPress={handleSairConta}>
+        <TouchableOpacity style={styles.option} onPress={() => handleNavigate('PaginaInicial')}>
           <Image source={Logout} style={styles.icon} />
           <Text style={[styles.optionText, styles.sairText]}>Sair desta conta</Text>
         </TouchableOpacity>

@@ -7,12 +7,13 @@ import Configuracoes from './pages/Configuracoes';
 import ExpectativasDeAprendizagem from './pages/ExpectativasDeAprendizagem';
 import AulasAnteriores from './pages/AulasAnteriores';
 import GerenciarNotificacoes from './pages/GerenciarNotificacoes'
+import PaginaInicial from './pages/PaginaInicial';
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="PaginaInicial">
       <Stack.Screen
         name="Home"
         component={Home}
@@ -45,6 +46,10 @@ const Routes = () => {
         component={GerenciarNotificacoes}
         options={{ headerBackTitleVisible: false, headerTitle: 'Gerenciar Notificações', headerTransparent: true }}
       />
+      <Stack.Screen
+        name="PaginaInicial"
+        component={PaginaInicial}
+        options={{headerShown: false}}/>
     </Stack.Navigator>
 
 
