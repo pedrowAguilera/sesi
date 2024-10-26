@@ -33,36 +33,41 @@ const Home = ({ navigation }) => {
     });
   
     if (!result.canceled) {
-      const selectedImageUri = result.assets[0].uri; // Acessando a URI corretamente
-      setImage(selectedImageUri);
+      const selectedImageUri = result.assets ? result.assets[0].uri : result.uri;
+      setProfileImage(selectedImageUri); // Corrigido para usar setProfileImage
       console.log("URI da imagem selecionada:", selectedImageUri);
     } else {
       console.log("Seleção de imagem cancelada.");
     }
-  };  
+};  
 
-  const handleTakePhoto = async () => {
-    // Solicitar permissão para usar a câmera
-    const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
-    if (cameraPermission.granted) {
-      let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
-      console.log("Resultado da câmera:", result); // Verificar o resultado da câmera
-      if (!result.cancelled) {
-        console.log("URI da imagem tirada:", result.uri);
-        setProfileImage(result.uri); // Definir a imagem tirada como imagem de perfil
-      }
+const handleTakePhoto = async () => {
+  const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
+  if (cameraPermission.granted) {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log("Resultado da câmera:", result); // Verificar o resultado da câmera
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const selectedImageUri = result.assets[0].uri;
+      console.log("URI da imagem tirada:", selectedImageUri);
+      setProfileImage(selectedImageUri); // Define a imagem tirada como imagem de perfil
+    } else if (!result.canceled && result.uri) {
+      console.log("URI da imagem tirada:", result.uri);
+      setProfileImage(result.uri);
     } else {
-      Alert.alert("Permissão negada", "Precisamos de acesso à câmera para tirar uma foto.");
+      console.log("Captura de imagem cancelada.");
     }
-  };
+  } else {
+    Alert.alert("Permissão negada", "Precisamos de acesso à câmera para tirar uma foto.");
+  }
+};
 
   const handlePickImage = async () => {
-    // Solicitar permissão para acessar a galeria
     const galleryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (galleryPermission.granted) {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -71,10 +76,17 @@ const Home = ({ navigation }) => {
         aspect: [1, 1],
         quality: 1,
       });
+      
       console.log("Resultado da galeria:", result); // Verificar o resultado da galeria
-      if (!result.cancelled) {
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const selectedImageUri = result.assets[0].uri;
+        console.log("URI da imagem selecionada:", selectedImageUri);
+        setProfileImage(selectedImageUri); // Define a imagem selecionada como imagem de perfil
+      } else if (!result.canceled && result.uri) {
         console.log("URI da imagem selecionada:", result.uri);
-        setProfileImage(result.uri); // Definir a imagem escolhida como imagem de perfil
+        setProfileImage(result.uri);
+      } else {
+        console.log("Seleção de imagem cancelada.");
       }
     } else {
       Alert.alert("Permissão negada", "Precisamos de acesso à galeria para escolher uma foto.");
